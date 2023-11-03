@@ -1,11 +1,6 @@
 import PropTypes from "prop-types";
 import "./style.scss";
 
-// Fonction pour générer des clés uniques
-function generateUniqueKey() {
-  return `unique-key-${Date.now()}-${Math.random()}`;
-}
-
 const ModalEvent = ({ event }) => (
   <div className="ModalEvent">
     <div className="ModalEvent__imageContainer">
@@ -30,7 +25,7 @@ const ModalEvent = ({ event }) => (
     <div className="ModalEvent__descriptionContainer">
       <h3>Prestations</h3>
       {event.prestations.map((presta) => (
-        <div key={generateUniqueKey()}>{presta}</div>
+        <div key={presta}>{presta}</div>
       ))}
     </div>
   </div>

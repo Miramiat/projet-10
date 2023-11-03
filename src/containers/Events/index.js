@@ -8,9 +8,7 @@ import ModalEvent from "../ModalEvent";
 
 import "./style.css";
 
-function generateUniqueKey() {
-  return `unique-key-${Date.now()}-${Math.random()}`;
-}
+
 
 const PER_PAGE = 9;
 
@@ -50,7 +48,7 @@ const EventList = () => {
           />
           <div id="events" className="ListContainer">
             {filteredEvents.slice(startIndex, endIndex).map((event) => (
-              <Modal key={generateUniqueKey()} Content={<ModalEvent event={event} />}>
+              <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
                   <EventCard
                     onClick={() => setIsOpened(true)}
@@ -64,15 +62,12 @@ const EventList = () => {
             ))}
           </div>
           <div className="Pagination">
-          {Array.from({ length: pageNumber }).map((_, index) => (
-        <a
-          key={generateUniqueKey()} // Utilisez la fonction pour générer une clé unique
-          href="#events"
-          onClick={() => setCurrentPage(index + 1)}
-        >
-          {index + 1}
-        </a>
-      ))}
+            {[...Array(pageNumber || 0)].map((_, n) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
+                {n + 1}
+              </a>
+            ))}
           </div>
         </>
       )}
