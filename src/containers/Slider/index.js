@@ -4,9 +4,7 @@ import { getMonth } from "../../helpers/Date";
 
 import "./style.scss";
 
-function generateUniqueKey() {
-  return `unique-key-${Date.now()}-${Math.random()}`;
-}
+
 
 const Slider = () => {
   const { data } = useData();
@@ -28,7 +26,7 @@ const Slider = () => {
       {byDateDesc?.map((event, idx) => (
         <>
           <div
-            key={generateUniqueKey()}
+            key={event.title}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
@@ -46,7 +44,7 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                key={generateUniqueKey()}
+                key={`${radioIdx + 5000}`}
                   type="radio"
                   name="radio-button"
                   checked={index === radioIdx}
