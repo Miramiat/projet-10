@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import "./style.scss";
@@ -14,82 +14,41 @@ const Select = ({
   const [value, setValue] = useState(null);
   const [collapsed, setCollapsed] = useState(true);
 
-  const changeValue = (newValue) => {
+  const handleOptionChange = (newValue) => {
     setValue(newValue);
     setCollapsed(true);
     onChange(newValue);
   };
-
-  const handleTitleClick = () => {
-    setCollapsed(!collapsed);
-  };
-
-  // Mise à jour de la valeur directement dans la fonction
-  const handleOptionClick = (newValue) => {
-    changeValue(newValue);
-  };
-
-  // ... (le reste du code)
 
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}
       <div className="Select">
         <ul>
-          <button
-            className={collapsed ? "SelectTitle--show" : "SelectTitle--hide"}
-            onClick={handleTitleClick}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                handleTitleClick();
-              }
-            }}
-            type="button"
-            tabIndex={0}
-          >
+          <li className={collapsed ? "SelectTitle--show" : "SelectTitle--hide"}>
             {value || (!titleEmpty && "Toutes")}
-          </button>
+          </li>
           {!collapsed && (
             <>
               {!titleEmpty && (
-                <button
-                  className="select-option"
-                  onClick={() => handleOptionClick(null)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleOptionClick(null);
-                    }
-                  }}
-                  type="button"
-                  tabIndex={0}
-                >
-                  <input
-                    checked={value === null} // Utiliser checked au lieu de defaultChecked
-                    name="selected"
-                    type="radio"
-                  />{" "}
-                  Toutes
-                </button>
+                <li>
+                  <button type="button" onClick={() => handleOptionChange(null)}>
+                    <input defaultChecked={value === null} name="selected" type="radio" />{" "}
+                    Toutes
+                  </button>
+                </li>
               )}
               {selection.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => handleOptionClick(s)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleOptionClick(s);
-                    }
-                  }}
-                  type="button"
-                  tabIndex={0}
-                >
-                  <input
-                    checked={value === s} // Utiliser checked au lieu de defaultChecked
-                    name="selected"
-                    type="radio"
-                  />{" "}
-                  {s}
-                </button>
+                <li key={s}>
+                  <button type="button" onClick={() => handleOptionChange(s)}>
+                    <input
+                      defaultChecked={value === s}
+                      name="selected"
+                      type="radio"
+                    />{" "}
+                    {s}
+                  </button>
+                </li>
               ))}
             </>
           )}
@@ -99,7 +58,10 @@ const Select = ({
           type="button"
           data-testid="collapse-button-testid"
           className={collapsed ? "open" : "close"}
-          onClick={handleTitleClick}
+          onClick={(e) => {
+            e.preventDefault();
+            setCollapsed(!collapsed);
+          }}
         >
           <Arrow />
         </button>
@@ -108,7 +70,6 @@ const Select = ({
   );
 };
 
-// ... (rest of the code)
 const Arrow = () => (
   <svg
     width="21"
@@ -131,7 +92,7 @@ Select.propTypes = {
   titleEmpty: PropTypes.bool,
   label: PropTypes.string,
   type: PropTypes.string,
-}
+};
 
 Select.defaultProps = {
   onChange: () => null,
@@ -139,6 +100,7 @@ Select.defaultProps = {
   label: "",
   type: "normal",
   name: "select",
-}
+};
 
 export default Select;
+

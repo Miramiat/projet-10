@@ -134,10 +134,17 @@ p {
 
 footer {
   padding: 0;
+  #modal-open{
+    width: 20%;
+    z-index: 99; 
+
+  
+  }
+
   .col {
     margin: 0;
     padding: 32px;
-
+    z-index: 1;
     &.contact {
       padding-left: 64px;
       div {
@@ -152,16 +159,28 @@ footer {
       }
     }
   }
+  .close-button{
+    width: 10%;
+    border: none;
+    background-color: white;
+    margin-top: -20%;
+    margin-left: +85%;
+    z-index: +999;
+  } 
+
+
 
   .presta {
     width: 35%;
     border-right: 1px solid rgba(91, 50, 255, 0.2);
-  }  
+  } 
+
   .description {
     width: 45%;
     border-left: 1px solid rgba(91, 50, 255, 0.2);
     padding: 0px 64px 0px 64px;
-  }
+  }    
+
 
   address {
     text-decoration: none;
@@ -169,6 +188,8 @@ footer {
     font-style: normal;
   }
 }
+
+
 
 .ModalMessage--success {
   font-family: "Manrope", sans-serif;

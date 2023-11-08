@@ -27,6 +27,8 @@ const EventList = () => {
     setCurrentPage(1);
   };
 
+  
+
   const pageNumber = Math.ceil(filteredEvents.length / PER_PAGE);
   const typeList = [...new Set(data?.events.map((event) => event.type))];
 
@@ -42,10 +44,11 @@ const EventList = () => {
         <>
           <h3 className="SelectTitle">Catégories</h3>
           <Select
-            selection={[...typeList]}
-            onChange={handleTypeChange}
-            value={type || "Toutes"}
-          />
+  selection={typeList}
+  onChange={handleTypeChange}
+  value={type} 
+/>
+
           <div id="events" className="ListContainer">
             {filteredEvents.slice(startIndex, endIndex).map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
