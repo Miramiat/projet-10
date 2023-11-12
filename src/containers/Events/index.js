@@ -4,19 +4,13 @@ import Select from "../../components/Select";
 import { useData } from "../../contexts/DataContext";
 import Modal from "../Modal";
 import ModalEvent from "../ModalEvent";
-
-
 import "./style.css";
 
-
-
 const PER_PAGE = 9;
-
 const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
   const filteredEvents = (data?.events || []).filter((event) => {
     if (!type) return true;
     return event.type === type;
@@ -26,8 +20,6 @@ const EventList = () => {
     setType(newType);
     setCurrentPage(1);
   };
-
-  
 
   const pageNumber = Math.ceil(filteredEvents.length / PER_PAGE);
   const typeList = [...new Set(data?.events.map((event) => event.type))];

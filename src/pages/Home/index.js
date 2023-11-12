@@ -10,7 +10,7 @@ import Logo from "../../components/Logo";
 import Icon from "../../components/Icon";
 import Form from "../../containers/Form";
 import Modal from "../../containers/Modal";
-import ModalEvent from "../../containers/ModalEvent"; // N'oubliez pas d'importer ModalEvent
+import ModalEvent from "../../containers/ModalEvent"; 
 import { useData } from "../../contexts/DataContext";
 import "./style.scss";
 
@@ -126,40 +126,39 @@ const Page = () => {
           </Modal>
         </div>
       </main>
-      <footer className="row">
-        <div className="col presta">
+      <footer data-testid="modal-event" className="row">
+        <div data-testid="last-event-card" className="col presta">
         {isModalOpen && (
-                <ModalEvent id= "modal-open" event={last} small={false} />
-              )}
-              {isModalOpen && (
                 <button type="button" className="close-button" onClick={closeModal}>
                   <Icon name="close" />
                 </button>
               )}
-          <h3>Notre dernière prestation</h3>
+        {isModalOpen && (
+                <ModalEvent data-testid="modal-event" id= "modal-open" event={last} small={false} />
+              )}
 
+          <h3>Notre dernière prestation</h3>
           {last && (
             <div>
               <div
               tabIndex={0}
               role="button"
               onClick={openModal}
-              onKeyPress={(e) => {
-      if (e.key === "Enter") {
-      openModal();
+              onKeyUp={(e) => {
+              if (e.key === "Enter") {
+              openModal();
     }
   }}
 >
                 <EventCard
+                  data-testid="last-event-card"
                   imageSrc={last.cover}
                   title={last.title}
                   date={new Date(last.date)}
                   label="boom"
                   small
-                />
-                
+                />              
               </div>
-
             </div>
           )}
         </div>
